@@ -15,3 +15,5 @@ do
         --input_file ${INPUTDIR}/${F} \
         --output_file ${OUTPUTDIR}/${F}
 done
+
+echo "ciao"
