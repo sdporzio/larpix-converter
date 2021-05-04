@@ -1,24 +1,26 @@
 #!/bin/bash
 #############################################################################
 ### DIRECTORIES
-SCRIPT='/home/dporzio/App/Software/larpix-v2-testing-scripts/event-display/to_evd_file.py'
-CONFDIR='/home/dporzio/App/Converter/ConfFiles'
-INPUTDIR='/home/dporzio/Data/1_Packet/Run'
-OUTPUTDIR='/home/dporzio/Data/2_Evd'
+SCRIPT='/home/daq/PACMANv1rev3/eventDisplay_evd/to_evd_file.py'
+CONFDIR='/home/daq/Converter/larpix-converter/ConfFiles'
+INPUTDIR='/data/LArPix/SingleModule_March2021/TPC12/dataRuns/packetData'
+OUTPUTDIR='/home/daq/Converter/Data/Michel'
 ### FILES
 GEOMETRYFILE=${CONFDIR}'/multi_tile_layout-2.1.16.yaml'
 CONFIGURATIONFILE=${CONFDIR}'/evd_config_21-03-31_12-36-13.json'
-PEDESTALFILE=${CONFDIR}'/raw_2021_04_04_09_31_43_CESTevd_ped.json'
+PEDESTALFILE=${CONFDIR}'/packet_2021_04_05_19_32_10_CESTevd_ped.json'
 DATAFILES='
-raw_2021_04_04_02_59_30_CEST.h5
+datalog_2021_04_05_17_28_34_CEST.h5
+datalog_2021_04_05_17_48_36_CEST.h5
+datalog_2021_04_05_17_08_31_CEST.h5
 '
 ### PARAMETERS
 EFIELD='0.5'           # E-field intensity [kV/cm]
 BUFFER_SIZE='38400'
 NHIT_CUT='100'          # min. number of hits requested for an event
-MAX_PACKETS='100000'
+MAX_PACKETS='-1'
 CLOCK_PERIOD='0.1'
-DBSCAN_EPS='20.0'      # 14
+DBSCAN_EPS='30.0'      # 14
 DBSCAN_MIN_SAMPLES='5'
 #############################################################################
 # Drift velocities and windows for SingleCube_Oct2020 experiment:
@@ -104,7 +106,7 @@ echo 'Geometry file: ' $GEOMETRYFILE
 for DATAFILE in $DATAFILES
 do
     unset -v OUTPUTFILENAME
-    OUTPUTFILENAME=${DATAFILE:0:-3}'_evd.h5'
+    OUTPUTFILENAME="michel_${DATAFILE:0:-3}_evd.h5"
     echo 'Output file:   ' $OUTPUTFILENAME
 
     python ${SCRIPT} \
